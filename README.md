@@ -29,7 +29,7 @@ Description: Return whether a phone call has happened between the 2 numbers
 example request:
 
 ```sh
- http://{host}/phonecall/didPhoneCallHappen?from=%2B1 1234567890&to=%2B12 123456789
+ http://{host}/phonecall/didPhoneCallHappen?from=%2B11234567890&to=%2B12123456789
 ```
 
 - GET http://{host}/phonecall/didPhoneCallHappenAnyOrder
@@ -44,5 +44,5 @@ Description: Return whether a phone call has happened between the 2 numbers in a
 example request:
 
 ```sh
- http://{host}/phonecall/didPhoneCallHappenAnyOrder?numberA=%2B12 123456789&numberB=%2B1 1234567890
+ http://{host}/phonecall/didPhoneCallHappenAnyOrder?numberA=%2B12123456789&numberB=%2B11234567890
 ```
