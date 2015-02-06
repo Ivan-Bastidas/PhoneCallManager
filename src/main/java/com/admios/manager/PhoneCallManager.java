@@ -8,6 +8,10 @@ import java.util.concurrent.ConcurrentMap;
 
 public class PhoneCallManager {
 
+    /*
+    * Using ConcurrentMap because it allows concurrent modification of the Map from several threads
+    * without the need to block them
+    */
     private ConcurrentMap<String, Boolean> phoneCalls = new ConcurrentHashMap<String, Boolean>();
     private static PhoneCallManager single = new PhoneCallManager();
 
@@ -16,6 +20,10 @@ public class PhoneCallManager {
 
     public static PhoneCallManager getInstance() {
         return single;
+    }
+
+    private boolean findCall(final String from, final String to) {
+        return phoneCalls.containsKey(Helpers.stringifyCall(from, to));
     }
 
     /*
@@ -43,9 +51,26 @@ public class PhoneCallManager {
         if (!Helpers.validateNumber(to)) {
             throw new PhoneNumberFormatException(to);
         }
-        return phoneCalls.containsKey(Helpers.stringifyCall(from, to));
+        return findCall(from, to);
     }
 
+    /*
+    * Return whether a phone call has happened between the 2 numbers for the lifetime
+    * of this application in any order between the numbers
+    */
+    public boolean didPhoneCallHappenAnyOrder(final String numberA, final String numberB) throws PhoneNumberFormatException {
+        if (!Helpers.validateNumber(numberA)) {
+            throw new PhoneNumberFormatException(numberA);
+        }
+        if (!Helpers.validateNumber(numberB)) {
+            throw new PhoneNumberFormatException(numberB);
+        }
+        return findCall(numberA, numberB) || findCall(numberB, numberA);
+    }
+
+    /*
+    * Removes all the recorded calls
+    */
     public void clearData() {
         phoneCalls.clear();
     }

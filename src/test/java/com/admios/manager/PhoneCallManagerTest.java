@@ -25,6 +25,14 @@ public class PhoneCallManagerTest {
         Assert.assertEquals(pcm.didPhoneCallHappen("+1 1234567890", "+12 123456789"), true);
     }
 
+    @Test
+    public void testCallHappenedAnyOrder() throws Exception {
+        PhoneCallManager pcm = PhoneCallManager.getInstance();
+        pcm.clearData();
+        pcm.phoneCallHappened("+1 1234567890", "+12 123456789");
+        Assert.assertEquals(pcm.didPhoneCallHappenAnyOrder("+12 123456789", "+1 1234567890"), true);
+    }
+
     @Test(expectedExceptions = PhoneNumberFormatException.class)
     public void testInvalidNumber() throws Exception {
         PhoneCallManager pcm = PhoneCallManager.getInstance();
