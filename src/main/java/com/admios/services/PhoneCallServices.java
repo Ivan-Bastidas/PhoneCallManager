@@ -16,6 +16,9 @@ import java.io.IOException;
 @Path("/phonecall")
 public class PhoneCallServices {
 
+    /*
+    * Record the fact that a phone call happened between 2 numbers
+    */
     @POST
     @Path("/phoneCallHappened")
     @Produces("application/json")
@@ -36,6 +39,12 @@ public class PhoneCallServices {
         return ResponseBuilder.create(200, 0, "Call registered successfully");
     }
 
+    /*
+    * Return whether a phone call has happened between the 2 numbers
+    * Params:
+    * from: number that made the call
+    * to: number that was called
+    */
     @GET
     @Path("/didPhoneCallHappen")
     @Produces("application/json")
@@ -44,6 +53,23 @@ public class PhoneCallServices {
         boolean callHappen;
         try {
             callHappen = phoneCallManager.didPhoneCallHappen(from, to);
+        } catch (PhoneNumberFormatException e) {
+            return ResponseBuilder.create(400, -2, e.getMessage());
+        }
+        return ResponseBuilder.create(200, 0, String.valueOf(callHappen));
+    }
+
+    /*
+    * Return whether a phone call has happened between the 2 numbers in any order between the numbers
+    */
+    @GET
+    @Path("/didPhoneCallHappenAnyOrder")
+    @Produces("application/json")
+    public Response didPhoneCallHappenAnyOrder(@QueryParam("numberA") String numberA, @QueryParam("numberB") String numberB) {
+        PhoneCallManager phoneCallManager = PhoneCallManager.getInstance();
+        boolean callHappen;
+        try {
+            callHappen = phoneCallManager.didPhoneCallHappenAnyOrder(numberA, numberB);
         } catch (PhoneNumberFormatException e) {
             return ResponseBuilder.create(400, -2, e.getMessage());
         }
