@@ -1,4 +1,4 @@
-package com.twilio.exceptions;
+package com.admios.exceptions;
 
 /**
  * Created by ivanbastidas on 2/6/15.

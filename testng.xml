@@ -1,7 +1,7 @@
 <suite name="PhoneManagerTestSuite" verbose="1">
     <test name="All Tests">
         <packages>
-             <package name="com.twilio.*"/>
+             <package name="com.admios.*"/>
         </packages>
     </test>
 </suite>
