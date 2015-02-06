@@ -46,3 +46,15 @@ example request:
 ```sh
  http://{host}/phonecall/didPhoneCallHappenAnyOrder?numberA=%2B12123456789&numberB=%2B11234567890
 ```
+
+- Run Test
+
+```sh
+ mvn test
+```
+
+- Generate War File
+
+```sh
+ mvn clean install
+```
