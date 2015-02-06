@@ -36,7 +36,13 @@ public class PhoneCallManager {
     * Return whether a phone call has happened between the 2 numbers for the lifetime
     * of this application
     */
-    public boolean didPhoneCallHappen(final String from, final String to) {
+    public boolean didPhoneCallHappen(final String from, final String to) throws PhoneNumberFormatException {
+        if (!Helpers.validateNumber(from)) {
+            throw new PhoneNumberFormatException(from);
+        }
+        if (!Helpers.validateNumber(to)) {
+            throw new PhoneNumberFormatException(to);
+        }
         return phoneCalls.containsKey(Helpers.stringifyCall(from, to));
     }
 

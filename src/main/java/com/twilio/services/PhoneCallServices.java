@@ -40,10 +40,13 @@ public class PhoneCallServices {
     @Path("/didPhoneCallHappen")
     @Produces("application/json")
     public Response didPhoneCallHappen(@QueryParam("from") String from, @QueryParam("to") String to) {
-        System.out.println(from);
-        System.out.println(to);
         PhoneCallManager phoneCallManager = PhoneCallManager.getInstance();
-        boolean callHappen = phoneCallManager.didPhoneCallHappen(from, to);
+        boolean callHappen;
+        try {
+            callHappen = phoneCallManager.didPhoneCallHappen(from, to);
+        } catch (PhoneNumberFormatException e) {
+            return ResponseBuilder.create(400, -2, e.getMessage());
+        }
         return ResponseBuilder.create(200, 0, String.valueOf(callHappen));
     }
 }
